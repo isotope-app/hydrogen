@@ -1,10 +1,10 @@
 import BaseEvent from './baseEvent';
 import JoinEvent from './joinEvent';
-import Accounts from './shared/accounts';
+import Group from './utils/group';
 import Events from './types/events';
 
 class AcceptedEvent extends BaseEvent {
-  constructor(public joinEvent: JoinEvent, public accounts: Accounts) {
+  constructor(public joinEvent: JoinEvent, public group: Group) {
     super(Events.Accepted);
     this.checkIdentity();
   }
