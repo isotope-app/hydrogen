@@ -1,5 +1,11 @@
+import crypto from 'node:crypto';
+
 class Group {
-  constructor(public name: string, public accounts: string[]) {}
+  ecdh: crypto.ECDH;
+
+  constructor(public name: string, public accounts: string[]) {
+    this.ecdh = crypto.createECDH('secp256k1');
+  }
 
   setName(name: string) {
     this.name = name;
