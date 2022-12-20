@@ -32,6 +32,7 @@ class JoinEvent extends BaseEvent {
       msgpack.encode({
         publicKey: this.publicKey,
         address: this.address,
+        signedMessage: this.signedMessage,
         signature: this.signature,
         id: this.id,
       }),
