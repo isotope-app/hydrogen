@@ -1,9 +1,9 @@
 import BaseEvent from './baseEvent';
 import Events from './types/events';
 
-class TerminationEvent extends BaseEvent {
+class BeatEvent extends BaseEvent {
   constructor() {
-    super(Events.Termination);
+    super(Events.Beat);
     this.ready = true;
   }
 
@@ -12,4 +12,4 @@ class TerminationEvent extends BaseEvent {
   }
 }
 
-export default TerminationEvent;
+export default BeatEvent;
