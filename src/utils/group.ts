@@ -4,7 +4,7 @@ class Group {
   ecdh: crypto.ECDH;
 
   constructor(public name: string, public accounts: string[]) {
-    this.ecdh = crypto.createECDH('secp256k1');
+    this.ecdh = crypto.createECDH('Curve25519');
   }
 
   setName(name: string) {
