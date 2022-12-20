@@ -17,6 +17,8 @@ class MessageEvent extends BaseEvent {
 
   publicKey: string;
 
+  timestamp?: number;
+
   constructor(
     public address: string,
     public content: string,
@@ -67,6 +69,7 @@ class MessageEvent extends BaseEvent {
   async init() {
     await this.createSignature();
     this.createMAC();
+    this.timestamp = Date.now();
     this.ready = true;
   }
 }
