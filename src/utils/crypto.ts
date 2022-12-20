@@ -1,4 +1,5 @@
 import * as sigUtil from '@metamask/eth-sig-util';
+import crypto from 'node:crypto';
 
 const encryptData = (publicKey: string, data: any) =>
   Buffer.from(
@@ -43,4 +44,38 @@ const checkSignature = async (
   return recoveredKey === expectedKey;
 };
 
-export { encryptData, decryptData, signMessage, checkSignature };
+const calculateMAC = (key: string, content: string) => {
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipheriv('aes-128-gcm', key, iv);
+  let mac = cipher.update(content, 'utf-8', 'hex');
+  mac += cipher.final('hex');
+  const authTag = cipher.getAuthTag().toString('hex');
+  return {
+    iv: iv.toString('hex'),
+    mac,
+    authTag,
+  };
+};
+
+const validateMAC = (
+  key: string,
+  content: string,
+  iv: string,
+  mac: string,
+  authTag: string,
+) => {
+  const decipher = crypto.createDecipheriv('aes-128-gcm', key, iv);
+  decipher.setAuthTag(Buffer.from(authTag, 'hex'));
+  let decrypted = decipher.update(mac, 'hex', 'utf-8');
+  decrypted += decipher.final('utf-8');
+  return decrypted === content;
+};
+
+export {
+  encryptData,
+  decryptData,
+  signMessage,
+  checkSignature,
+  calculateMAC,
+  validateMAC,
+};

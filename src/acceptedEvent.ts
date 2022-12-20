@@ -1,10 +1,14 @@
 import msgpack from 'msgpack-lite';
-import crypto from 'node:crypto';
 import BaseEvent from './baseEvent';
 import JoinEvent from './joinEvent';
 import Group from './utils/group';
 import Events from './types/events';
-import { checkSignature, signMessage } from './utils/crypto';
+import {
+  calculateMAC,
+  checkSignature,
+  encryptData,
+  signMessage,
+} from './utils/crypto';
 
 class AcceptedEvent extends BaseEvent {
   groupKey?: string;
@@ -50,18 +54,16 @@ class AcceptedEvent extends BaseEvent {
     this.signature = signature;
   }
 
-  calculateMAC() {
-    const iv = crypto.randomBytes(16);
-    const cipher = crypto.createCipheriv('aes-128-gcm', this.groupKey!, iv);
-    this.mac = cipher.update(this.groupKey!, 'utf-8', 'hex');
-    this.mac += cipher.final('hex');
-    this.authTag = cipher.getAuthTag().toString('hex');
-    this.iv = iv.toString('hex');
+  createMAC() {
+    const { mac, authTag, iv } = calculateMAC(this.groupKey!, this.groupKey!);
+    this.mac = mac;
+    this.authTag = authTag;
+    this.iv = iv;
   }
 
   into(): Buffer {
     if (!this.ready) throw Error('Event not initialized.');
-    return Buffer.concat([
+    const res = Buffer.concat([
       this.magic,
       msgpack.encode({
         groupKey: this.groupKey,
@@ -72,13 +74,14 @@ class AcceptedEvent extends BaseEvent {
         iv: this.iv,
       }),
     ]);
+    return encryptData(this.joinEvent.publicKey, res);
   }
 
   async init() {
     await this.checkIdentity();
     this.updateGroupKey();
     await this.createSignature();
-    this.calculateMAC();
+    this.createMAC();
     this.ready = true;
   }
 }
