@@ -1,14 +1,20 @@
+import msgpack from 'msgpack-lite';
 import BaseEvent from './baseEvent';
 import Events from './types/events';
 
 class TerminationEvent extends BaseEvent {
-  constructor() {
+  constructor(public reason: string) {
     super(Events.Termination);
     this.ready = true;
   }
 
   into(): Buffer {
-    return this.magic;
+    return Buffer.concat([
+      this.magic,
+      msgpack.encode({
+        reason: this.reason,
+      }),
+    ]);
   }
 }
 
