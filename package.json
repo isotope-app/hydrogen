@@ -57,7 +57,6 @@
   },
   "dependencies": {
     "@metamask/eth-sig-util": "^5.0.2",
-    "msgpack-lite": "^0.1.26",
-    "web3-eth": "^1.8.1"
+    "msgpack-lite": "^0.1.26"
   }
 }
