@@ -1,9 +1,11 @@
 import * as sigUtil from '@metamask/eth-sig-util';
-import crypto from 'node:crypto';
+import crypto from 'crypto';
 
+// rome-ignore lint/suspicious/noExplicitAny: data will be automatically processed
 const encryptData = (publicKey: string, data: any) =>
   Buffer.from(JSON.stringify(sigUtil.encrypt({ publicKey, data, version: 'x25519-xsalsa20-poly1305' })));
 
+// rome-ignore lint/suspicious/noExplicitAny: we don't have a type for window.ethereum
 const decryptData = (windowEth: any, data: Buffer, address: string) =>
   windowEth.request({
     method: 'eth_decrypt',
@@ -11,12 +13,12 @@ const decryptData = (windowEth: any, data: Buffer, address: string) =>
   });
 
 const signMessage = async (message: string, account: string) => {
-  const hash = await (window as any).ethereum.request({
+  const hash = await window.ethereum.request({
     method: 'web3_sha3',
     params: [`0x${Buffer.from(message).toString('hex')}`],
   });
 
-  const signature = await (window as any).ethereum.request({
+  const signature = await window.ethereum.request({
     method: 'eth_sign',
     params: [hash, account],
   });
@@ -27,7 +29,7 @@ const signMessage = async (message: string, account: string) => {
 };
 
 const checkSignature = async (signedMessage: string, signature: string, expectedKey: string) => {
-  const recoveredKey = await (window as any).ethereum.request({
+  const recoveredKey = await window.ethereum.request({
     method: 'eth_ecrecover',
     params: [signedMessage, signature],
   });
