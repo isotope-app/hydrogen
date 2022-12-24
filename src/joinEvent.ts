@@ -15,10 +15,7 @@ class JoinEvent extends BaseEvent {
   }
 
   async init() {
-    const { signedMessage, signature } = await signMessage(
-      'JoinEvent',
-      this.address,
-    );
+    const { signedMessage, signature } = await signMessage('JoinEvent', this.address);
 
     this.signedMessage = signedMessage;
     this.signature = signature;

@@ -12,11 +12,11 @@ class Group {
   }
 
   addMember(accounts: string[]) {
-    this.accounts.push(...accounts.filter(a => !this.accounts.includes(a)));
+    this.accounts.push(...accounts.filter((a) => !this.accounts.includes(a)));
   }
 
   removeMember(account: string) {
-    this.accounts = this.accounts.filter(a => a !== account);
+    this.accounts = this.accounts.filter((a) => a !== account);
   }
 
   reset() {

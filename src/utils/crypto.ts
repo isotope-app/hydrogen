@@ -2,11 +2,7 @@ import * as sigUtil from '@metamask/eth-sig-util';
 import crypto from 'node:crypto';
 
 const encryptData = (publicKey: string, data: any) =>
-  Buffer.from(
-    JSON.stringify(
-      sigUtil.encrypt({ publicKey, data, version: 'x25519-xsalsa20-poly1305' }),
-    ),
-  );
+  Buffer.from(JSON.stringify(sigUtil.encrypt({ publicKey, data, version: 'x25519-xsalsa20-poly1305' })));
 
 const decryptData = (windowEth: any, data: Buffer, address: string) =>
   windowEth.request({
@@ -25,18 +21,12 @@ const signMessage = async (message: string, account: string) => {
     params: [hash, account],
   });
 
-  const signedMessage = `\x19Ethereum Signed Message:\n${
-    Buffer.from(message).length
-  }${message}${signature}`;
+  const signedMessage = `\x19Ethereum Signed Message:\n${Buffer.from(message).length}${message}${signature}`;
 
   return { signedMessage, signature };
 };
 
-const checkSignature = async (
-  signedMessage: string,
-  signature: string,
-  expectedKey: string,
-) => {
+const checkSignature = async (signedMessage: string, signature: string, expectedKey: string) => {
   const recoveredKey = await (window as any).ethereum.request({
     method: 'eth_ecrecover',
     params: [signedMessage, signature],
@@ -57,13 +47,7 @@ const calculateMAC = (key: string, content: string) => {
   };
 };
 
-const validateMAC = (
-  key: string,
-  content: string,
-  iv: string,
-  mac: string,
-  authTag: string,
-) => {
+const validateMAC = (key: string, content: string, iv: string, mac: string, authTag: string) => {
   const decipher = crypto.createDecipheriv('aes-128-gcm', key, iv);
   decipher.setAuthTag(Buffer.from(authTag, 'hex'));
   let decrypted = decipher.update(mac, 'hex', 'utf-8');
@@ -71,11 +55,4 @@ const validateMAC = (
   return decrypted === content;
 };
 
-export {
-  encryptData,
-  decryptData,
-  signMessage,
-  checkSignature,
-  calculateMAC,
-  validateMAC,
-};
+export { encryptData, decryptData, signMessage, checkSignature, calculateMAC, validateMAC };

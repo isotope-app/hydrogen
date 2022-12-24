@@ -19,21 +19,14 @@ class MessageEvent extends BaseEvent {
 
   timestamp?: number;
 
-  constructor(
-    public address: string,
-    public content: string,
-    public group: Group,
-  ) {
+  constructor(public address: string, public content: string, public group: Group) {
     super(Events.MessageEvent);
 
     this.publicKey = this.group.ecdh.getPublicKey().toString('hex');
   }
 
   async createSignature() {
-    const { signedMessage, signature } = await signMessage(
-      this.content,
-      this.address,
-    );
+    const { signedMessage, signature } = await signMessage(this.content, this.address);
     this.signedMessage = signedMessage;
     this.signature = signature;
   }
@@ -62,7 +55,7 @@ class MessageEvent extends BaseEvent {
           authTag: this.authTag,
           iv: this.iv,
         }),
-      ]),
+      ])
     );
   }
 

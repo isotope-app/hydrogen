@@ -3,12 +3,7 @@ import BaseEvent from './baseEvent';
 import JoinEvent from './joinEvent';
 import Group from './utils/group';
 import Events from './types/events';
-import {
-  calculateMAC,
-  checkSignature,
-  encryptData,
-  signMessage,
-} from './utils/crypto';
+import { calculateMAC, checkSignature, encryptData, signMessage } from './utils/crypto';
 
 class AcceptedEvent extends BaseEvent {
   groupKey?: string;
@@ -23,32 +18,22 @@ class AcceptedEvent extends BaseEvent {
 
   signedMessage?: string;
 
-  constructor(
-    public joinEvent: JoinEvent,
-    public group: Group,
-    public address: string,
-  ) {
+  constructor(public joinEvent: JoinEvent, public group: Group, public address: string) {
     super(Events.Accepted);
   }
 
   async checkIdentity() {
     const { id, signature, signedMessage, publicKey } = this.joinEvent;
     if (id !== 0) throw Error('ID field is not zero(0).');
-    if (await checkSignature(signedMessage!, signature!, publicKey))
-      throw Error('Signature check failed.');
+    if (await checkSignature(signedMessage!, signature!, publicKey)) throw Error('Signature check failed.');
   }
 
   updateGroupKey() {
-    this.groupKey = this.group.ecdh
-      .computeSecret(Buffer.from(this.joinEvent.publicKey, 'base64'))
-      .toString('hex');
+    this.groupKey = this.group.ecdh.computeSecret(Buffer.from(this.joinEvent.publicKey, 'base64')).toString('hex');
   }
 
   async createSignature() {
-    const { signedMessage, signature } = await signMessage(
-      'JoinEvent',
-      this.address,
-    );
+    const { signedMessage, signature } = await signMessage('JoinEvent', this.address);
 
     this.signedMessage = signedMessage;
     this.signature = signature;
