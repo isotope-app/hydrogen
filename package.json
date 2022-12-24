@@ -11,17 +11,15 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "husky install && tsdx build",
+    "build": "spack",
+    "lint": "eslint src/**/*.ts",
+    "prepare": "husky install && yarn build",
     "size": "size-limit",
     "analyze": "size-limit --why"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "yarn lint"
     }
   },
   "name": "@isotope-app/hydrogen",
@@ -42,6 +40,8 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@size-limit/preset-small-lib": "^8.1.0",
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.3.24",
     "@types/msgpack-lite": "^0.1.8",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
     "@typescript-eslint/parser": "^5.0.0",
@@ -52,7 +52,6 @@
     "eslint-plugin-import": "^2.25.2",
     "husky": "^8.0.2",
     "size-limit": "^8.1.0",
-    "tsdx": "^0.14.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.4"
   },
