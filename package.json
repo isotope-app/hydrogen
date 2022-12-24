@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0-beta-6",
+  "version": "1.0.0-beta-7",
   "license": "MIT",
   "main": "dist/index.js",
   "files": [
@@ -11,7 +11,8 @@
   "scripts": {
     "build": "zx build.mjs",
     "lint": "rome check src/",
-    "format": "rome format src/ --write"
+    "format": "rome format src/ --write",
+    "prepare": "husky install && yarn build"
   },
   "husky": {
     "hooks": {
@@ -26,6 +27,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@types/msgpack-lite": "^0.1.8",
+    "esbuild": "^0.16.10",
     "husky": "^8.0.2",
     "rome": "^11.0.0",
     "tslib": "^2.4.1",
