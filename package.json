@@ -36,7 +36,6 @@
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/msgpack-lite": "^0.1.8",
-    "eslint": "^8.30.0",
     "husky": "^8.0.2",
     "rome": "^11.0.0",
     "size-limit": "^8.1.0",
