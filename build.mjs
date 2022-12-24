@@ -4,22 +4,18 @@ import 'zx/globals';
 import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 import { build } from 'esbuild';
 
+console.log('Removing existing build...');
 await $`rm -rf dist`;
 
+console.log('Building...');
 build({
   entryPoints: ['src/index.ts'],
   bundle: true,
   minify: false,
   sourcemap: true,
   plugins: [NodeModulesPolyfillPlugin()],
-  outfile: 'dist/hydrogen.development.js',
+  outdir: 'dist',
 });
 
-build({
-  entryPoints: ['src/index.ts'],
-  bundle: true,
-  minify: true,
-  sourcemap: true,
-  plugins: [NodeModulesPolyfillPlugin()],
-  outfile: 'dist/hydrogen.production.js',
-});
+console.log('Generating type definitions...');
+await $`tsc`;

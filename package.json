@@ -1,7 +1,7 @@
 {
   "version": "1.0.0-beta-4",
   "license": "MIT",
-  "main": "dist/hydrogen.production.js",
+  "main": "dist/index.js",
   "files": [
     "dist"
   ],
@@ -12,9 +12,7 @@
     "build": "zx build.mjs",
     "lint": "rome check src/",
     "format": "rome format src/ --write",
-    "prepare": "husky install && yarn build",
-    "size": "size-limit",
-    "analyze": "size-limit --why"
+    "prepare": "husky install && yarn build"
   },
   "husky": {
     "hooks": {
@@ -24,21 +22,13 @@
   "name": "@isotope-app/hydrogen",
   "author": "ivy",
   "repository": "https://github.com/isotope-app/hydrogen.git",
-  "size-limit": [
-    {
-      "path": "dist/hydrogen.production.js",
-      "limit": "10 KB"
-    }
-  ],
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-    "@size-limit/preset-small-lib": "^8.1.0",
     "@types/msgpack-lite": "^0.1.8",
     "husky": "^8.0.2",
     "rome": "^11.0.0",
-    "size-limit": "^8.1.0",
     "tslib": "^2.4.1",
     "typescript": "^4.9.4",
     "zx": "^7.1.1"
