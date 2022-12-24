@@ -1,12 +1,33 @@
-import * as sigUtil from '@metamask/eth-sig-util';
 import crypto from 'crypto';
+import nacl from 'tweetnacl';
+import { decodeBase64, encodeBase64, decodeUTF8 } from 'tweetnacl-util';
+import EthereumProvider from '../types/provider';
 
-// rome-ignore lint/suspicious/noExplicitAny: data will be automatically processed
-const encryptData = (publicKey: string, data: any) =>
-  Buffer.from(JSON.stringify(sigUtil.encrypt({ publicKey, data, version: 'x25519-xsalsa20-poly1305' })));
+// https://github.com/MetaMask/eth-sig-util/blob/main/src/encryption.ts
+const encryptData = (publicKey: string | Buffer, data: string | Buffer) => {
+  const ephemeralKeyPair = nacl.box.keyPair();
+  const nonce = nacl.randomBytes(nacl.box.nonceLength);
 
-// rome-ignore lint/suspicious/noExplicitAny: we don't have a type for window.ethereum
-const decryptData = (windowEth: any, data: Buffer, address: string) =>
+  // Encrypt
+  const encryptedMessage = nacl.box(
+    data instanceof Buffer ? data : decodeUTF8(data),
+    nonce,
+    publicKey instanceof Buffer ? publicKey : decodeBase64(publicKey),
+    ephemeralKeyPair.secretKey,
+  );
+
+  const output = {
+    version: 'x25519-xsalsa20-poly1305',
+    nonce: encodeBase64(nonce),
+    ephemPublicKey: encodeBase64(ephemeralKeyPair.publicKey),
+    ciphertext: encodeBase64(encryptedMessage),
+  };
+
+  // Return encrypted msg data
+  return Buffer.from(JSON.stringify(output));
+};
+
+const decryptData = (windowEth: EthereumProvider, data: Buffer, address: string) =>
   windowEth.request({
     method: 'eth_decrypt',
     params: [data, address],

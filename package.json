@@ -25,7 +25,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
     "@types/msgpack-lite": "^0.1.8",
     "esbuild": "^0.16.10",
     "husky": "^8.0.2",
@@ -35,8 +34,10 @@
     "zx": "^7.1.1"
   },
   "dependencies": {
-    "@metamask/eth-sig-util": "^5.0.2",
-    "msgpack-lite": "^0.1.26"
+    "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
+    "msgpack-lite": "^0.1.26",
+    "tweetnacl": "^1.0.3",
+    "tweetnacl-util": "^0.15.1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

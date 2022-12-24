@@ -2,6 +2,8 @@
 // https://github.com/microsoft/TypeScript/pull/50528
 // so we will use a fake enum for now
 
+import { Buffer } from 'buffer';
+
 const Events = {
   Null: Buffer.from([0x00]),
   Join: Buffer.from([0x05]),

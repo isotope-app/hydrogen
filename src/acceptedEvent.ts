@@ -36,7 +36,7 @@ class AcceptedEvent extends BaseEvent {
     const { signedMessage, signature } = await signMessage('JoinEvent', this.address);
 
     this.signedMessage = signedMessage;
-    this.signature = signature;
+    this.signature = signature as string;
   }
 
   createMAC() {

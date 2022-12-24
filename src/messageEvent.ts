@@ -28,7 +28,7 @@ class MessageEvent extends BaseEvent {
   async createSignature() {
     const { signedMessage, signature } = await signMessage(this.content, this.address);
     this.signedMessage = signedMessage;
-    this.signature = signature;
+    this.signature = signature as string;
   }
 
   createMAC() {
