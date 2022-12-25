@@ -1,4 +1,5 @@
 import msgpack from 'msgpack-lite';
+import { Buffer } from 'buffer';
 import BaseEvent from './baseEvent';
 import JoinEvent from './joinEvent';
 import Group from './utils/group';
