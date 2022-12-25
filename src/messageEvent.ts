@@ -6,7 +6,7 @@ import { calculateMAC, encryptData, signMessage } from './utils/crypto';
 import Group from './utils/group';
 
 class MessageEvent extends BaseEvent {
-  signedMessage?: string;
+  messageHash?: string;
 
   signature?: string;
 
@@ -27,8 +27,8 @@ class MessageEvent extends BaseEvent {
   }
 
   async createSignature() {
-    const { signedMessage, signature } = await signMessage(this.content, this.address);
-    this.signedMessage = signedMessage;
+    const { messageHash, signature } = await signMessage(this.content, this.address);
+    this.messageHash = messageHash as string;
     this.signature = signature as string;
   }
 
@@ -50,7 +50,7 @@ class MessageEvent extends BaseEvent {
           address: this.address,
           publicKey: this.publicKey,
           content: this.content,
-          signedMessage: this.signedMessage,
+          messageHash: this.messageHash,
           signature: this.signature,
           mac: this.mac,
           authTag: this.authTag,

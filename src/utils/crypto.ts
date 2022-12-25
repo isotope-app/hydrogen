@@ -35,25 +35,23 @@ const decryptData = (windowEth: EthereumProvider, data: Buffer, address: string)
   });
 
 const signMessage = async (message: string, account: string) => {
-  const hash = await window.ethereum.request({
+  const messageHash = await window.ethereum.request({
     method: 'web3_sha3',
     params: [`0x${Buffer.from(message).toString('hex')}`],
   });
 
   const signature = await window.ethereum.request({
-    method: 'eth_sign',
-    params: [hash, account],
+    method: 'personal_sign',
+    params: [messageHash, account],
   });
 
-  const signedMessage = `\x19Ethereum Signed Message:\n${Buffer.from(message).length}${message}${signature}`;
-
-  return { signedMessage, signature };
+  return { messageHash, signature };
 };
 
-const checkSignature = async (signedMessage: string, signature: string, expectedKey: string) => {
+const checkSignature = async (messageHash: string, signature: string, expectedKey: string) => {
   const recoveredKey = await window.ethereum.request({
-    method: 'eth_ecrecover',
-    params: [signedMessage, signature],
+    method: 'personal_ecRecover',
+    params: [messageHash, signature],
   });
   return recoveredKey === expectedKey;
 };

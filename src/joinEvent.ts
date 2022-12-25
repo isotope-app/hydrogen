@@ -9,16 +9,16 @@ class JoinEvent extends BaseEvent {
 
   signature?: string;
 
-  signedMessage?: string;
+  messageHash?: string;
 
   constructor(public address: string, public publicKey: string) {
     super(Events.Join);
   }
 
   async init() {
-    const { signedMessage, signature } = await signMessage('JoinEvent', this.address);
+    const { messageHash, signature } = await signMessage('JoinEvent', this.address);
 
-    this.signedMessage = signedMessage;
+    this.messageHash = messageHash as string;
     this.signature = signature as string;
     this.ready = true;
   }
@@ -30,7 +30,7 @@ class JoinEvent extends BaseEvent {
       msgpack.encode({
         publicKey: this.publicKey,
         address: this.address,
-        signedMessage: this.signedMessage,
+        messageHash: this.messageHash,
         signature: this.signature,
         id: this.id,
       }),

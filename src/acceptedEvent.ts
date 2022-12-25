@@ -17,16 +17,16 @@ class AcceptedEvent extends BaseEvent {
 
   signature?: string;
 
-  signedMessage?: string;
+  messageHash?: string;
 
   constructor(public joinEvent: JoinEvent, public group: Group, public address: string) {
     super(Events.Accepted);
   }
 
   async checkIdentity() {
-    const { id, signature, signedMessage, publicKey } = this.joinEvent;
+    const { id, signature, messageHash, publicKey } = this.joinEvent;
     if (id !== 0) throw Error('ID field is not zero(0).');
-    if (await checkSignature(signedMessage!, signature!, publicKey)) throw Error('Signature check failed.');
+    if (await checkSignature(messageHash!, signature!, publicKey)) throw Error('Signature check failed.');
   }
 
   updateGroupKey() {
@@ -34,9 +34,9 @@ class AcceptedEvent extends BaseEvent {
   }
 
   async createSignature() {
-    const { signedMessage, signature } = await signMessage('JoinEvent', this.address);
+    const { messageHash, signature } = await signMessage('JoinEvent', this.address);
 
-    this.signedMessage = signedMessage;
+    this.messageHash = messageHash as string;
     this.signature = signature as string;
   }
 
@@ -56,7 +56,7 @@ class AcceptedEvent extends BaseEvent {
         mac: this.mac,
         authTag: this.authTag,
         signature: this.signature,
-        signedMessage: this.signedMessage,
+        messageHash: this.messageHash,
         iv: this.iv,
       }),
     ]);
