@@ -1,18 +1,19 @@
 {
   "include": ["src", "types"],
   "compilerOptions": {
-    "module": "esnext",
+    "module": "Node16",
     "lib": ["dom", "esnext"],
     "importHelpers": true,
     "declaration": true,
     "declarationDir": "./dist",
     "sourceMap": true,
     "rootDir": "./src",
+    "outDir": "./dist",
     "strict": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "emitDeclarationOnly": true,
+    "emitDeclarationOnly": false,
   }
 }

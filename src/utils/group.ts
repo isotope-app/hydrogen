@@ -1,10 +1,10 @@
-import crypto from 'crypto';
+import webcrypto from 'crypto';
 
 class Group {
-  ecdh: crypto.ECDH;
+  ecdh: webcrypto.ECDH;
 
   constructor(public name: string, public accounts: string[]) {
-    this.ecdh = crypto.createECDH('Curve25519');
+    this.ecdh = webcrypto.createECDH('Curve25519');
   }
 
   setName(name: string) {

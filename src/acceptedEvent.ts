@@ -1,10 +1,10 @@
 import msgpack from 'msgpack-lite';
 import { Buffer } from 'buffer';
-import BaseEvent from './baseEvent';
-import JoinEvent from './joinEvent';
-import Group from './utils/group';
-import Events from './types/events';
-import { calculateMAC, checkSignature, encryptData, signMessage } from './utils/crypto';
+import BaseEvent from './baseEvent.js';
+import JoinEvent from './joinEvent.js';
+import Group from './utils/group.js';
+import Events from './types/events.js';
+import { calculateMAC, checkSignature, encryptData, signMessage } from './utils/crypto.js';
 
 class AcceptedEvent extends BaseEvent {
   groupKey?: string;

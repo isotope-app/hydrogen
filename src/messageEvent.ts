@@ -1,9 +1,9 @@
 import msgpack from 'msgpack-lite';
 import { Buffer } from 'buffer';
-import BaseEvent from './baseEvent';
-import Events from './types/events';
-import { calculateMAC, encryptData, signMessage } from './utils/crypto';
-import Group from './utils/group';
+import BaseEvent from './baseEvent.js';
+import Events from './types/events.js';
+import { calculateMAC, encryptData, signMessage } from './utils/crypto.js';
+import Group from './utils/group.js';
 
 class MessageEvent extends BaseEvent {
   messageHash?: string;

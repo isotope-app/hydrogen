@@ -1,15 +1,16 @@
 {
   "version": "1.0.0-beta-10",
   "license": "MIT",
-  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "type": "module",
   "files": [
     "dist"
   ],
   "engines": {
-    "node": ">=10"
+    "node": ">=14.16"
   },
   "scripts": {
-    "build": "zx build.mjs",
+    "build": "rm -rf dist && tsc",
     "lint": "rome check src/",
     "format": "rome format src/ --write",
     "prepare": "husky install && yarn build"
@@ -26,12 +27,10 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "@types/msgpack-lite": "^0.1.8",
-    "esbuild": "^0.16.10",
     "husky": "^8.0.2",
     "rome": "^11.0.0",
     "tslib": "^2.4.1",
-    "typescript": "^4.9.4",
-    "zx": "^7.1.1"
+    "typescript": "^4.9.4"
   },
   "dependencies": {
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",

@@ -1,13 +1,13 @@
-import AcceptedEvent from './acceptedEvent';
-import JoinEvent from './joinEvent';
-import TerminationEvent from './terminationEvent';
-import RequestRotationEvent from './requestRotationEvent';
-import BeatEvent from './beatEvent';
-import MessageEvent from './messageEvent';
+import AcceptedEvent from './acceptedEvent.js';
+import JoinEvent from './joinEvent.js';
+import TerminationEvent from './terminationEvent.js';
+import RequestRotationEvent from './requestRotationEvent.js';
+import BeatEvent from './beatEvent.js';
+import MessageEvent from './messageEvent.js';
 
-import * as account from './utils/account';
-import * as crypto from './utils/crypto';
-import Group from './utils/group';
+import * as account from './utils/account.js';
+import * as crypto from './utils/crypto.js';
+import Group from './utils/group.js';
 
 export {
   AcceptedEvent,

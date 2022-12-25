@@ -1,7 +1,7 @@
 import msgpack from 'msgpack-lite';
 import { Buffer } from 'buffer';
-import BaseEvent from './baseEvent';
-import Events from './types/events';
+import BaseEvent from './baseEvent.js';
+import Events from './types/events.js';
 
 class TerminationEvent extends BaseEvent {
   constructor(public reason: string) {

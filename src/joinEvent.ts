@@ -1,8 +1,8 @@
 import msgpack from 'msgpack-lite';
 import { Buffer } from 'buffer';
-import BaseEvent from './baseEvent';
-import Events from './types/events';
-import { signMessage } from './utils/crypto';
+import BaseEvent from './baseEvent.js';
+import Events from './types/events.js';
+import { signMessage } from './utils/crypto.js';
 
 class JoinEvent extends BaseEvent {
   id = 0; // uhh probably will fix this soon
