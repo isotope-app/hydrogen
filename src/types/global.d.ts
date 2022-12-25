@@ -1,4 +1,4 @@
-import EthereumProvider from "./provider";
+import EthereumProvider from './provider.js';
 
 declare global {
   interface Window {
