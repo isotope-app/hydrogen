@@ -3,6 +3,7 @@
   "license": "MIT",
   "exports": "./dist/index.js",
   "type": "module",
+  "typings": "./dist/index.d.ts",
   "files": [
     "dist"
   ],
